@@ -1,0 +1,73 @@
+# ==========================================
+# Kotlin Multiplatform (Android & iOS) .gitignore
+# ==========================================
+
+# --- Gradle ---
+.gradle/
+**/build/
+local.properties
+*.gradle
+!gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+!gradlew
+!gradlew.bat
+!gradle/wrapper/
+
+# --- Android ---
+*.apk
+*.aab
+*.ap_
+*.dex
+captures/
+android/.cxx/
+*.keystore
+*.jks
+*.p12
+*.pfx
+signing.properties
+
+# --- iOS / Xcode ---
+**/*.xcworkspace/
+xcuserdata/
+**/*.xcuserstate
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.moved-aside
+
+# CocoaPods (если используется)
+**/Pods/
+# Podfile.lock рекомендуется коммитить для фиксации версий зависимостей
+
+# Swift Package Manager (если используется)
+iosApp/.build/
+
+# --- Kotlin / KMP Specific ---
+.kotlin/
+konan/
+caches/
+*.klib
+*.kotlin_built_module
+
+# --- IDE (IntelliJ IDEA / Android Studio) ---
+.idea/
+*.iml
+*.ipr
+*.iws
+.run/
+*.swp
+*.swo
+*~
+
+# --- OS & Temporary ---
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# --- Environment & Secrets ---
+.env
+*.env.*
+!.env.example
