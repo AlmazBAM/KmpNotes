@@ -9,7 +9,14 @@ import platform.UIKit.UINavigationControllerDelegateProtocol
 import platform.Foundation.NSURL
 import platform.darwin.NSObject
 import platform.UIKit.UIApplication
-import platform.UIKit.UIImagePickerControllerReferenceURL
+import platform.UIKit.UIImagePickerControllerOriginalImage
+import platform.UIKit.UIImagePickerControllerEditedImage
+import platform.UIKit.UIImage
+import platform.UIKit.UIImageJPEGRepresentation
+import platform.Foundation.NSTemporaryDirectory
+import platform.Foundation.NSUUID
+import platform.Foundation.writeToURL
+import platform.UIKit.UIWindow
 
 @Composable
 actual fun rememberImagePickerLauncher(onResult: (String?) -> Unit): ImagePickerLauncher {
@@ -19,8 +26,28 @@ actual fun rememberImagePickerLauncher(onResult: (String?) -> Unit): ImagePicker
                 picker: UIImagePickerController,
                 didFinishPickingMediaWithInfo: Map<Any?, *>
             ) {
-                val url = didFinishPickingMediaWithInfo[UIImagePickerControllerReferenceURL] as? NSURL
-                onResult(url?.absoluteString)
+                val image = (didFinishPickingMediaWithInfo[UIImagePickerControllerEditedImage]
+                    ?: didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage]) as? UIImage
+
+                if (image != null) {
+                    val imageData = UIImageJPEGRepresentation(image, 0.8)
+                    if (imageData != null) {
+                        val fileName = "temp_${NSUUID().UUIDString()}.jpg"
+                        val tempPath = NSTemporaryDirectory()
+                        val fileURL = NSURL.fileURLWithPath(tempPath).URLByAppendingPathComponent(fileName)!!
+
+                        if (imageData.writeToURL(fileURL, true)) {
+                            // Возвращаем путь. Если Coil не подхватит, попробуйте "file://" + fileURL.path
+                            onResult(fileURL.path)
+                        } else {
+                            onResult(null)
+                        }
+                    } else {
+                        onResult(null)
+                    }
+                } else {
+                    onResult(null)
+                }
                 picker.dismissViewControllerAnimated(true, null)
             }
 
@@ -36,9 +63,11 @@ actual fun rememberImagePickerLauncher(onResult: (String?) -> Unit): ImagePicker
                 val picker = UIImagePickerController()
                 picker.setSourceType(UIImagePickerControllerSourceType.UIImagePickerControllerSourceTypePhotoLibrary)
                 picker.setDelegate(delegate)
-                
-                val rootViewController = UIApplication.sharedApplication.keyWindow?.rootViewController
-                rootViewController?.presentViewController(picker, true, null)
+
+                val keyWindow = UIApplication.sharedApplication.windows.firstOrNull { (it as? UIWindow)?.isKeyWindow() == true } as? UIWindow
+                    ?: UIApplication.sharedApplication.keyWindow
+
+                keyWindow?.rootViewController?.presentViewController(picker, true, null)
             }
         }
     }
