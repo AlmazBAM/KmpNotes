@@ -6,12 +6,10 @@ import kmpnotes.composeapp.generated.resources.hour_ago
 import kmpnotes.composeapp.generated.resources.houra_ago
 import kmpnotes.composeapp.generated.resources.hours_ago
 import kmpnotes.composeapp.generated.resources.just_now
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import org.jetbrains.compose.resources.stringResource
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
-import kotlin.time.Instant
 
-@OptIn(ExperimentalTime::class)
 object DateFormatter {
 
     @Composable
