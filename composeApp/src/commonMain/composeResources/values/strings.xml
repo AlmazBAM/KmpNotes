@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Notion</string>
+    <string name="search">Search...</string>
+    <string name="all_notes">All notes</string>
+    <string name="pinned">Pinned</string>
+    <string name="others">Others</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="save_note">Save note</string>
+    <string name="create_note">Create Note</string>
+    <string name="title">Title</string>
+    <string name="note_something_down">Note something down</string>
+    <string name="just_now">just now</string>
+    <string name="hour_ago">%1$d hours ago</string>
+    <string name="houra_ago">%1$d hours ago</string>
+    <string name="hours_ago">%1$d hours ago</string>
+</resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Notion</string>
+    <string name="search">Поиск...</string>
+    <string name="all_notes">Все заметки</string>
+    <string name="pinned">Закреплённые</string>
+    <string name="others">Остальные</string>
+    <string name="edit_note">Редактирование</string>
+    <string name="save_note">Сохранить</string>
+    <string name="create_note">Создание</string>
+    <string name="title">Заголовок</string>
+    <string name="note_something_down">Введите что-нибудь...</string>
+    <string name="just_now">только что</string>
+    <string name="hour_ago">%1$d час назад</string>
+    <string name="houra_ago">%1$d часа назад</string>
+    <string name="hours_ago">%1$d часов назад</string>
+</resources>
