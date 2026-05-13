@@ -6,6 +6,9 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.jetbrainsKotlinSerialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.room)
 }
 
 kotlin {
@@ -14,7 +17,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosArm64(),
         iosSimulatorArm64()
@@ -24,25 +27,50 @@ kotlin {
             isStatic = true
         }
     }
-    
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.uiToolingPreview)
+            // Android-specific UI & Tooling
             implementation(libs.androidx.activity.compose)
+            implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.compose.ui.tooling)
+
+            // Android-specific DI
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
         }
+
         commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.ui)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodelCompose)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
+            // Compose UI & Foundation
+            implementation(libs.bundles.compose)
+
+            // Lifecycle & Navigation
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.navigation.compose)
+
+            // DI
+            api(libs.bundles.koin)
+
+            // Data & Serialization
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.bundles.coil)
+            implementation(libs.sqlite.bundled)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.kotlinx.datetime)
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+    }
+
+    dependencies {
+        ksp(libs.androidx.room.compiler)
     }
 }
 
@@ -74,6 +102,6 @@ android {
 }
 
 dependencies {
-    debugImplementation(libs.compose.uiTooling)
+    debugImplementation(libs.compose.ui.tooling)
 }
 
