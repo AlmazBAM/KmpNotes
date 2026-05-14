@@ -16,7 +16,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.TextAutoSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Home
@@ -32,7 +34,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -41,25 +42,33 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bagmanov.kmpnotes.core.presentation.NoteCard
 import com.bagmanov.kmpnotes.core.presentation.NoteCardWithImage
 import com.bagmanov.kmpnotes.core.presentation.SearchBar
 import com.bagmanov.kmpnotes.core.presentation.Subtitle
 import com.bagmanov.kmpnotes.core.presentation.Title
+import com.bagmanov.kmpnotes.core.presentation.ui.theme.OtherNotesColors
+import com.bagmanov.kmpnotes.core.presentation.ui.theme.PinnedNotesColors
 import com.bagmanov.kmpnotes.notes_manager.domain.model.ContentItem
 import com.bagmanov.kmpnotes.notes_manager.presentation.notes.state.NotesScreenState
-import com.bagmanov.kmpnotes.notes_manager.presentation.ui.theme.OtherNotesColors
-import com.bagmanov.kmpnotes.notes_manager.presentation.ui.theme.PinnedNotesColors
 import kmpnotes.composeapp.generated.resources.Res
 import kmpnotes.composeapp.generated.resources.all_notes
+import kmpnotes.composeapp.generated.resources.favorites_tab
+import kmpnotes.composeapp.generated.resources.home_tab
 import kmpnotes.composeapp.generated.resources.others
 import kmpnotes.composeapp.generated.resources.pinned
+import kmpnotes.composeapp.generated.resources.search_tab
+import kmpnotes.composeapp.generated.resources.settings_tab
+import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -71,8 +80,8 @@ fun NotesScreen(
     onOpenNote: (Int) -> Unit,
 ) {
     var selected by remember { mutableStateOf(Tab.Home) }
-    val primary = Color(0xFF6A40C4)      // фиолетовый из примера
-    val unselected = Color(0xFF8E8E93)   // серый
+    val primary = MaterialTheme.colorScheme.primary
+    val unselected = MaterialTheme.colorScheme.onSurface
 
     Scaffold(
         modifier = modifier,
@@ -80,7 +89,7 @@ fun NotesScreen(
             NavigationBar(
                 containerColor = Color.Transparent
             ) {
-                val left = listOf(Tab.Home, Tab.Finished)
+                val left = listOf(Tab.Home, Tab.Favourites)
                 val right = listOf(Tab.Search, Tab.Settings)
 
                 left.forEach { item ->
@@ -195,7 +204,8 @@ fun NotesScreen(
                     key = { _, note -> note.id }
                 ) { index, note ->
                     val firstImageUrl =
-                        note.content.filterIsInstance<ContentItem.Image>().map { it.url }.firstOrNull()
+                        note.content.filterIsInstance<ContentItem.Image>().map { it.url }
+                            .firstOrNull()
 
                     if (firstImageUrl == null) {
                         NoteCard(
@@ -240,17 +250,34 @@ private fun RowScope.NavItem(
     selected: Tab,
     primary: Color,
     unselected: Color,
-    onClick: (Tab) -> Unit
+    onClick: (Tab) -> Unit,
 ) {
+    val baseStyle = MaterialTheme.typography.labelLarge.copy(
+        fontWeight = FontWeight.SemiBold
+    )
     NavigationBarItem(
         selected = selected == item,
         onClick = { onClick(item) },
         icon = { Icon(item.icon, contentDescription = null) },
-        label = { if (selected == item) Text(item.label) },
+        label = {
+            if (selected == item) {
+                BasicText(
+                    text = stringResource(item.label),
+                    style = baseStyle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    autoSize = TextAutoSize.StepBased(
+                        minFontSize = 8.sp,
+                        maxFontSize = baseStyle.fontSize,
+                        stepSize = 0.5.sp
+                    )
+                )
+            }
+        },
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = primary,
             selectedTextColor = primary,
-            indicatorColor = Color.Transparent, // без плашки под иконкой
+            indicatorColor = Color.Transparent,
             unselectedIconColor = unselected,
             unselectedTextColor = unselected
         )
@@ -258,9 +285,9 @@ private fun RowScope.NavItem(
 }
 
 
-enum class Tab(val label: String, val icon: ImageVector) {
-    Home("Home", Icons.Outlined.Home),
-    Finished("Finished", Icons.Outlined.Star),
-    Search("Search", Icons.Outlined.Search),
-    Settings("Settings", Icons.Outlined.Settings)
+enum class Tab(val label: StringResource, val icon: ImageVector) {
+    Home(Res.string.home_tab, Icons.Outlined.Home),
+    Favourites(Res.string.favorites_tab, Icons.Outlined.Star),
+    Search(Res.string.search_tab, Icons.Outlined.Search),
+    Settings(Res.string.settings_tab, Icons.Outlined.Settings)
 }

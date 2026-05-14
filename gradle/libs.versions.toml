@@ -8,7 +8,8 @@ androidx-coreKtx = "1.15.0"
 androidx-lifecycle = "2.8.3"
 androidx-navigation = "2.8.0-alpha10"
 coil = "3.0.0-rc02"
-composeMultiplatform = "1.7.3"
+composeMultiplatform = "1.8.0"
+composeMaterialIconExtended = "1.7.3"
 koin = "4.0.0"
 kotlin = "2.1.0"
 kotlinx-serialization = "1.7.3"
@@ -32,6 +33,7 @@ coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.r
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
+compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "composeMaterialIconExtended" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "composeMultiplatform" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
@@ -71,6 +73,7 @@ compose = [
     "androidx-navigation-compose",
     "compose-components-resources",
     "compose-foundation",
+    "compose-material-icons-extended",
     "compose-material3",
     "compose-runtime",
     "compose-ui",

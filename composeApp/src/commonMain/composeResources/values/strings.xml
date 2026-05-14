@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Notion</string>
+
+    <string name="home_tab">Home</string>
+    <string name="favorites_tab">Favorites</string>
+    <string name="search_tab">Search</string>
+    <string name="settings_tab">Settings</string>
+
     <string name="search">Search...</string>
     <string name="all_notes">All notes</string>
     <string name="pinned">Pinned</string>
