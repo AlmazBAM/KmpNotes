@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import com.bagmanov.kmpnotes.core.presentation.Content
 import com.bagmanov.kmpnotes.core.presentation.utils.DateFormatter
 import com.bagmanov.kmpnotes.notes_manager.presentation.editing.state.EditNoteState
-import com.bagmanov.kmpnotes.notes_manager.presentation.ui.icons.CustomIcons
+import com.bagmanov.kmpnotes.core.presentation.ui.icons.CustomIcons
 import com.bagmanov.kmpnotes.core.presentation.utils.rememberImagePickerLauncher
 import kmpnotes.composeapp.generated.resources.Res
 import kmpnotes.composeapp.generated.resources.edit_note

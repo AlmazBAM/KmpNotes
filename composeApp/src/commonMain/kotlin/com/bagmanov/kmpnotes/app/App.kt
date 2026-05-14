@@ -15,7 +15,7 @@ import com.bagmanov.kmpnotes.notes_manager.presentation.editing.EditNoteScreen
 import com.bagmanov.kmpnotes.notes_manager.presentation.editing.EditNoteViewModel
 import com.bagmanov.kmpnotes.notes_manager.presentation.notes.NotesScreen
 import com.bagmanov.kmpnotes.notes_manager.presentation.notes.NotesViewModel
-import com.bagmanov.kmpnotes.notes_manager.presentation.ui.theme.NotionTheme
+import com.bagmanov.kmpnotes.core.presentation.ui.theme.NotionTheme
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

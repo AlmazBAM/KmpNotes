@@ -1,4 +1,4 @@
-package com.bagmanov.kmpnotes.notes_manager.presentation.ui.theme
+package com.bagmanov.kmpnotes.core.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

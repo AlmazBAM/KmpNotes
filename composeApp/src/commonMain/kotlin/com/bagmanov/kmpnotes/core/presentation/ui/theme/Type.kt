@@ -1,4 +1,4 @@
-package com.bagmanov.kmpnotes.notes_manager.presentation.ui.theme
+package com.bagmanov.kmpnotes.core.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-package com.bagmanov.kmpnotes.notes_manager.presentation.ui.icons
+package com.bagmanov.kmpnotes.core.presentation.ui.icons
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
